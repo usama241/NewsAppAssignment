@@ -10,7 +10,7 @@ class NewsViewModel: ObservableObject {
         self.repository = repository
     }
     
-    func loadArticles(forceRefresh: Bool = false) {
+    func loadArticles(forceRefresh: Bool) {
         if forceRefresh {
             fetchAndCache()
             return

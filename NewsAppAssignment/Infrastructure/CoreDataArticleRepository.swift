@@ -20,7 +20,7 @@ class CoreDataArticleRepository: ArticleRepository {
     func save(articles: [ArticleModel]) {
         clearAllArticles()
         let now = Date()
-        let expiry = Calendar.current.date(byAdding: .minute, value: 5, to: now)!
+        let expiry = Calendar.current.date(byAdding: .minute, value: 1, to: now)!
         
         for article in articles {
             let entity = ArticleEntity(context: context)
