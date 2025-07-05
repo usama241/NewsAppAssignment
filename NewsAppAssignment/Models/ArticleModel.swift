@@ -1,7 +1,7 @@
 import Foundation
 
 struct ArticleModel {
-    let source : Source?
+    let source : String?
     let author : String?
     let title : String?
     let description : String?

@@ -7,16 +7,110 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A5CD8DDC-5EF0-4AF8-BCB8-5C7CDF5EF0A1"
+            uuid = "66B3E0C7-6A3D-4EA2-BB89-FEFE53464DF8"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "NewsAppAssignment/Modules/NewsList/NewsListViewModel.swift"
+            filePath = "NewsAppAssignment/Infrastructure/CoreDataArticleRepository.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "18"
-            endingLineNumber = "18"
-            landmarkName = "newsList()"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "save(articles:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F8FB6C0B-9ED4-4EF0-9363-9D62B13857A5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewsAppAssignment/Infrastructure/CoreDataArticleRepository.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "save(articles:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2822D905-41D6-4728-B7C9-B707B5F00FE4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewsAppAssignment/Infrastructure/CoreDataArticleRepository.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "save(articles:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B90B77B4-E9A3-4828-B359-55CF5E909FE7"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewsAppAssignment/Infrastructure/CoreDataArticleRepository.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "getCachedArticles()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B90B77B4-E9A3-4828-B359-55CF5E909FE7 - fcc16e09bed6e36d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NewsAppAssignment.CoreDataArticleRepository.getCachedArticles() -&gt; Swift.Array&lt;NewsAppAssignment.ArticleModel&gt;"
+                  moduleName = "NewsAppAssignment.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbookpro/Desktop/NewsAppAssignment/NewsAppAssignment/Infrastructure/CoreDataArticleRepository.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49">
+               </Location>
+               <Location
+                  uuid = "B90B77B4-E9A3-4828-B359-55CF5E909FE7 - 234bf97c22da5fec"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (NewsAppAssignment.ArticleEntity) -&gt; NewsAppAssignment.ArticleModel in NewsAppAssignment.CoreDataArticleRepository.getCachedArticles() -&gt; Swift.Array&lt;NewsAppAssignment.ArticleModel&gt;"
+                  moduleName = "NewsAppAssignment.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbookpro/Desktop/NewsAppAssignment/NewsAppAssignment/Infrastructure/CoreDataArticleRepository.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "51"
+                  endingLineNumber = "51">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E608BA17-FEDE-40E8-8CA3-0EE411B00F17"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewsAppAssignment/Infrastructure/CoreDataArticleRepository.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "getCachedArticles()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

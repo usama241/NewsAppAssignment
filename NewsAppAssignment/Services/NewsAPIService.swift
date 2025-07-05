@@ -1,13 +1,13 @@
 import Foundation
 
-protocol MovieServicesProtocol {
+protocol NewsAPIServiceProtocol {
     
     init(apiClient: APIClientProtocol)
     
     func newsList() async throws -> [ArticleModel]
 }
 
-class MovieServices: MovieServicesProtocol {
+class NewsAPIService: NewsAPIServiceProtocol {
     let apiClient: APIClientProtocol
     
     required init(apiClient: APIClientProtocol) {
@@ -21,7 +21,7 @@ class MovieServices: MovieServicesProtocol {
          if apiResponse.status == "ok" {
              let fetchedNewsList = apiResponse.articles ?? []
              return fetchedNewsList.map { news in
-                 ArticleModel(source: news.source,
+                 ArticleModel(source: news.source?.name,
                               author: news.author,
                               title: news.title,
                               description: news.description,

@@ -6,7 +6,7 @@ import SafariServices
 class NewsListViewController: UIViewController {
     
     //MARK: - Properties
-    var viewModel: NewsListViewModel!
+    var viewModel: NewsViewModel!
     var coordinator: NewsListCoordinator!
     private var subscribers: Set<AnyCancellable> = []
 
@@ -14,7 +14,7 @@ class NewsListViewController: UIViewController {
     private let tableView = UITableView()
     private let noHistoryLabel: UILabel = {
         let label = UILabel()
-        label.text = "Movie List is Empty!"
+        label.text = "News List is Empty!"
         label.textAlignment = .center
         label.textColor = .gray
         label.isHidden = false
@@ -23,7 +23,7 @@ class NewsListViewController: UIViewController {
     }()
 
     // MARK: - Init
-    init(viewModel: NewsListViewModel, coordinator: NewsListCoordinator) {
+    init(viewModel: NewsViewModel, coordinator: NewsListCoordinator) {
         self.viewModel = viewModel
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
@@ -36,7 +36,7 @@ class NewsListViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Movies List"
+        self.title = "News List"
         view.backgroundColor = .systemBackground
         setupUI()
         setupTableView()
@@ -52,13 +52,11 @@ class NewsListViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            // TableView Constraints
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 
-            // No History Label Centered
             noHistoryLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             noHistoryLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
@@ -73,11 +71,11 @@ class NewsListViewController: UIViewController {
 
     // MARK: - Data Binding
     private func bindViews() {
-        viewModel.$newsList
+        viewModel.$articles
             .receive(on: RunLoop.main)
-            .sink { [weak self] movies in
+            .sink { [weak self] news in
                 guard let self = self else { return }
-                let isEmpty = movies?.isEmpty ?? true
+                let isEmpty = news.isEmpty
                 self.noHistoryLabel.isHidden = !isEmpty
                 self.tableView.isHidden = isEmpty
                 self.tableView.reloadData()
@@ -90,7 +88,7 @@ class NewsListViewController: UIViewController {
         Task { [weak self] in
             guard let self = self else { return }
             do {
-                try await viewModel.newsList()
+                try await viewModel.loadArticles()
             } catch {
                 await MainActor.run {
                     let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
@@ -107,7 +105,7 @@ class NewsListViewController: UIViewController {
 extension NewsListViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.newsList?.count ?? 0
+        return viewModel.articles.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -116,22 +114,22 @@ extension NewsListViewController: UITableViewDataSource, UITableViewDelegate {
         }
         cell.selectedBackgroundView = UIView()
         cell.selectedBackgroundView?.backgroundColor = .clear
-        let title = viewModel.newsList?[indexPath.row].title ?? ""
-        let source = viewModel.newsList?[indexPath.row].source?.name ?? ""
-        let imageURL = viewModel.newsList?[indexPath.row].urlToImage ?? ""
+        let title = viewModel.articles[indexPath.row].title ?? ""
+        let source = viewModel.articles[indexPath.row].source ?? ""
+        let imageURL = viewModel.articles[indexPath.row].urlToImage ?? ""
 
         cell.configure(title: title, source: source, imageURL: imageURL)
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let urlString = viewModel.newsList?[indexPath.row].url,
+        guard let urlString = viewModel.articles[indexPath.row].url,
                 let url = URL(string: urlString) else {
               return
           }
           
           let safariVC = SFSafariViewController(url: url)
-          safariVC.modalPresentationStyle = .formSheet // optional
+          safariVC.modalPresentationStyle = .formSheet
           present(safariVC, animated: true)
     }
 }

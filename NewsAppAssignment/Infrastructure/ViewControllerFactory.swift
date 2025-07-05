@@ -16,8 +16,9 @@ class ViewControllerFactory: ViewControllerFactoryProtocol {
     }
     
     func newsListViewController(navigationController: UINavigationController) -> NewsListViewController {
-        let movieServices = MovieServices(apiClient: apiClient)
-        let viewModel = NewsListViewModel(service: movieServices)
+        let newServices = NewsAPIService(apiClient: apiClient)
+        let repository = CoreDataArticleRepository()
+        let viewModel = NewsViewModel(apiService: newServices, repository: repository)
         let coordinator = NewsListCoordinator(navigationController: navigationController, viewControllerFactory: self)
         let viewController = NewsListViewController(viewModel: viewModel, coordinator: coordinator)
         return viewController
