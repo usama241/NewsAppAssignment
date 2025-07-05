@@ -1,22 +1,18 @@
-//
-//  SceneDelegate.swift
-//  NewsAppAssignment
-//
-//  Created by MacBook Pro on 04/07/2025.
-//
-
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    var appCoordinator: AppCoordinator?
+    
+    private lazy var defaultURLSession: URLSession = {
+        return URLSession(configuration: .default, delegate: nil, delegateQueue: nil)
+    }()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let scene = (scene as? UIWindowScene) else { return }
+        window = UIWindow(windowScene: scene)
+        startApp()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -49,7 +45,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Save changes in the application's managed object context when the application transitions to the background.
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
-
-
 }
 
+extension SceneDelegate {
+    
+    func startApp() {
+        guard let window else { return }
+        let apiClient: APIClientProtocol = APIClient(urlSession: defaultURLSession)
+        let factory = ViewControllerFactory(apiClient: apiClient)
+        appCoordinator = AppCoordinator(window: window, viewControllerFactory: factory)
+        appCoordinator?.start()
+    }
+}

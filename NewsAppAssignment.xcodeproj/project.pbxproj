@@ -11,10 +11,10 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		5213A0792E1836C1006EAC35 /* Exceptions for "NewsAppAssignment" folder in "NewsAppAssignment" target */ = {
+		5213A1362E184646006EAC35 /* Exceptions for "NewsAppAssignment" folder in "NewsAppAssignment" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Application/Info.plist,
+				Info.plist,
 			);
 			target = 5213A0632E1836BF006EAC35 /* NewsAppAssignment */;
 		};
@@ -24,7 +24,7 @@
 		5213A0662E1836BF006EAC35 /* NewsAppAssignment */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				5213A0792E1836C1006EAC35 /* Exceptions for "NewsAppAssignment" folder in "NewsAppAssignment" target */,
+				5213A1362E184646006EAC35 /* Exceptions for "NewsAppAssignment" folder in "NewsAppAssignment" target */,
 			);
 			path = NewsAppAssignment;
 			sourceTree = "<group>";
@@ -249,6 +249,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -307,6 +308,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
