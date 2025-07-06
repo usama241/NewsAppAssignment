@@ -1,6 +1,6 @@
 import Foundation
 
-class NewsViewModel: ObservableObject {
+class NewsListViewModel: ObservableObject {
     
     @Published var articles: [ArticleModel] = []
     private let apiService: NewsAPIService

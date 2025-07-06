@@ -10,5 +10,4 @@ class NewsListCoordinator {
         self.navigationController = navigationController
         self.viewControllerFactory = viewControllerFactory
     }
-
 }

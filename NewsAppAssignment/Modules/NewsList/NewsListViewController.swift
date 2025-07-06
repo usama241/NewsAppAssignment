@@ -6,7 +6,7 @@ import SafariServices
 class NewsListViewController: UIViewController {
     
     // MARK: - Properties
-    var viewModel: NewsViewModel!
+    var viewModel: NewsListViewModel!
     var coordinator: NewsListCoordinator!
     private var subscribers = Set<AnyCancellable>()
     
@@ -16,7 +16,7 @@ class NewsListViewController: UIViewController {
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     
     // MARK: - Init
-    init(viewModel: NewsViewModel, coordinator: NewsListCoordinator) {
+    init(viewModel: NewsListViewModel, coordinator: NewsListCoordinator) {
         self.viewModel = viewModel
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
