@@ -8,6 +8,7 @@ class NewsListTableViewCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
+        imageView.image = UIImage(named: "placeholder")
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 8
         return imageView

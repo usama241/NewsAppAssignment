@@ -6,12 +6,15 @@ protocol ArticleRepository {
     func getCachedArticles() -> [ArticleModel]
     func clearExpiredArticles()
 }
-
 class CoreDataArticleRepository: ArticleRepository {
     private let context = CoreDataStack.shared.context
     
+    private var memoryCache: [ArticleModel] = []
+    
     func save(articles: [ArticleModel]) {
         clearAllArticles()
+        memoryCache = articles
+
         let now = Date()
         let expiry = Calendar.current.date(byAdding: .minute, value: 5, to: now)!
         
@@ -28,31 +31,34 @@ class CoreDataArticleRepository: ArticleRepository {
         do {
             try context.save()
         } catch {
-            print("Failed to save articles: \(error)")
+            debugPrint("Failed to save articles: \(error)")
         }
     }
 
     func getCachedArticles() -> [ArticleModel] {
+        if !memoryCache.isEmpty {
+            return memoryCache
+        }
+
         let fetch: NSFetchRequest<ArticleEntity> = ArticleEntity.fetchRequest()
         let now = Date()
         fetch.predicate = NSPredicate(format: "expiresAt > %@", now as NSDate)
 
         do {
             let entities = try context.fetch(fetch)
-            return entities.map { articleEntity in
+            let articles = entities.map { articleEntity in
                 return ArticleModel(
                     source: articleEntity.source,
-                    author: nil,
                     title: articleEntity.title,
-                    description: nil,
                     url: articleEntity.url,
-                    urlToImage: articleEntity.imageUrl,
-                    publishedAt: nil,
-                    content: nil
+                    urlToImage: articleEntity.imageUrl
                 )
             }
+            
+            memoryCache = articles
+            return articles
         } catch {
-            print("Failed to fetch cached articles: \(error)")
+            debugPrint("Failed to fetch cached articles: \(error)")
             return []
         }
     }
@@ -68,11 +74,13 @@ class CoreDataArticleRepository: ArticleRepository {
                 context.delete(entity)
             }
             try context.save()
+            memoryCache.removeAll { article in
+                expired.contains { $0.url == article.url }
+            }
         } catch {
-            print("Failed to clear expired articles: \(error)")
+            debugPrint("Failed to clear expired articles: \(error)")
         }
     }
-
     
     private func clearAllArticles() {
         let fetch: NSFetchRequest<NSFetchRequestResult> = ArticleEntity.fetchRequest()
@@ -80,8 +88,9 @@ class CoreDataArticleRepository: ArticleRepository {
         
         do {
             try context.execute(deleteRequest)
+            memoryCache.removeAll()
         } catch {
-            print("Failed to delete all articles: \(error)")
+            debugPrint("Failed to delete all articles: \(error)")
         }
     }
 }

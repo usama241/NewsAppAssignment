@@ -1,43 +1,42 @@
 import Foundation
 
 class NewsViewModel: ObservableObject {
+    
     @Published var articles: [ArticleModel] = []
     private let apiService: NewsAPIService
     private let repository: ArticleRepository
+    let source: String = "bbc-news"
+    let apiKey: String = "1a51c99ade634d3a9d2c6b1464bf585d"
     
     init(apiService: NewsAPIService, repository: ArticleRepository) {
         self.apiService = apiService
         self.repository = repository
     }
     
-    func loadArticles(forceRefresh: Bool) {
+    func loadArticles(forceRefresh: Bool) async throws {
         if forceRefresh {
-            fetchAndCache()
+            self.articles = try await fetchAndCache()
             return
         }
-
-        repository.clearExpiredArticles()
+        
         let cached = repository.getCachedArticles()
-        print(cached)
+        
         if !cached.isEmpty {
             self.articles = cached
         } else {
-            fetchAndCache()
+            self.articles = try await fetchAndCache()
         }
+        repository.clearExpiredArticles()
     }
     
-    private func fetchAndCache() {
-        Task { [weak self] in
-            do {
-                let articles = try await self?.apiService.newsList() ?? []
-                DispatchQueue.main.async {
-                    print(articles)
-                    self?.articles = articles
-                    self?.repository.save(articles: articles)
-                }
-            } catch {
-                print("API error: \(error)")
-            }
+    func fetchAndCache() async throws -> [ArticleModel] {
+        do {
+            let articles = try await apiService.newsList(source: self.source, apiKey: self.apiKey)
+            repository.save(articles: articles)
+            self.articles = articles
+            return articles
+        } catch {
+            throw error
         }
     }
 }

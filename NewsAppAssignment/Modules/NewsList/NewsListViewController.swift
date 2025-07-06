@@ -5,23 +5,15 @@ import SafariServices
 
 class NewsListViewController: UIViewController {
     
-    //MARK: - Properties
+    // MARK: - Properties
     var viewModel: NewsViewModel!
     var coordinator: NewsListCoordinator!
-    private var subscribers: Set<AnyCancellable> = []
+    private var subscribers = Set<AnyCancellable>()
     
     // MARK: - UI Components
     private let tableView = UITableView()
-    private let noHistoryLabel: UILabel = {
-        let label = UILabel()
-        label.text = "News List is Empty!"
-        label.textAlignment = .center
-        label.textColor = .gray
-        label.isHidden = false
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    let refreshControl = UIRefreshControl()
+    private let refreshControl = UIRefreshControl()
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
     
     // MARK: - Init
     init(viewModel: NewsViewModel, coordinator: NewsListCoordinator) {
@@ -37,19 +29,26 @@ class NewsListViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Latest News"
-        view.backgroundColor = .systemBackground
+        configureView()
         setupUI()
         setupTableView()
         bindViews()
         fetchNewsList(forceRefresh: false)
     }
     
+    // MARK: - Configuration
+    private func configureView() {
+        title = "Latest News"
+        view.backgroundColor = .systemBackground
+    }
+    
     // MARK: - Setup UI
     private func setupUI() {
-        view.addSubview(tableView)
-        view.addSubview(noHistoryLabel)
+        activityIndicator.center = view.center
+        activityIndicator.hidesWhenStopped = true
+        view.addSubview(activityIndicator)
         
+        view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -57,14 +56,10 @@ class NewsListViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            noHistoryLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            noHistoryLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
         
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         tableView.refreshControl = refreshControl
-        
     }
     
     @objc private func refreshData() {
@@ -84,34 +79,34 @@ class NewsListViewController: UIViewController {
             .receive(on: RunLoop.main)
             .sink { [weak self] news in
                 guard let self = self else { return }
-                let isEmpty = news.isEmpty
-                self.noHistoryLabel.isHidden = !isEmpty
-                self.tableView.isHidden = isEmpty
                 self.tableView.reloadData()
                 self.refreshControl.endRefreshing()
             }
             .store(in: &subscribers)
     }
     
-    // MARK: - Fetch
+    // MARK: - Fetching Data
     private func fetchNewsList(forceRefresh: Bool) {
         Task { [weak self] in
             guard let self = self else { return }
+            await MainActor.run { self.activityIndicator.startAnimating() }
+            
             do {
-              viewModel.loadArticles(forceRefresh: forceRefresh)
+                try await viewModel.loadArticles(forceRefresh: forceRefresh)
             } catch {
                 await MainActor.run {
                     let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .default))
                     self.present(alert, animated: true)
-                    self.noHistoryLabel.isHidden = false
                 }
             }
+            
+            await MainActor.run { self.activityIndicator.stopAnimating() }
         }
     }
 }
 
-
+// MARK: - UITableViewDataSource, UITableViewDelegate
 extension NewsListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -122,21 +117,21 @@ extension NewsListViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "NewsListTableViewCell", for: indexPath) as? NewsListTableViewCell else {
             return UITableViewCell()
         }
-        cell.selectedBackgroundView = UIView()
-        cell.selectedBackgroundView?.backgroundColor = .clear
-        let title = viewModel.articles[indexPath.row].title ?? ""
-        let source = viewModel.articles[indexPath.row].source ?? ""
-        let imageURL = viewModel.articles[indexPath.row].urlToImage ?? ""
+        
+        let article = viewModel.articles[indexPath.row]
+        let title = article.title ?? ""
+        let source = article.source ?? ""
+        let imageURL = article.urlToImage ?? ""
         
         cell.configure(title: title, source: source, imageURL: imageURL)
+        cell.selectedBackgroundView = UIView()
+        cell.selectedBackgroundView?.backgroundColor = .clear
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let urlString = viewModel.articles[indexPath.row].url,
-              let url = URL(string: urlString) else {
-            return
-        }
+        guard let urlString = viewModel.articles[indexPath.row].url, let url = URL(string: urlString) else { return }
         
         let safariVC = SFSafariViewController(url: url)
         safariVC.modalPresentationStyle = .formSheet

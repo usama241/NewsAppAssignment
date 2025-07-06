@@ -16,7 +16,7 @@ enum APIError: LocalizedError {
         case .unexpectedError:
             return "We are unable to process your request at this time. Please try again later."
         case .noInternet:
-            return "NET001 - Please ensure your device is connected to the internet and try again."
+            return "Please ensure your device is connected to the internet and try again."
         case .other(let message):
             return message
         }
