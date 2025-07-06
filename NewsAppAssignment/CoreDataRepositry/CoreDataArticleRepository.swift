@@ -2,13 +2,15 @@ import Foundation
 import CoreData
 
 protocol ArticleRepository {
+    
     func save(articles: [ArticleModel])
     func getCachedArticles() -> [ArticleModel]
     func clearExpiredArticles()
 }
+
 class CoreDataArticleRepository: ArticleRepository {
-    private let context = CoreDataStack.shared.context
     
+    private let context = CoreDataStack.shared.context
     private var memoryCache: [ArticleModel] = []
     
     func save(articles: [ArticleModel]) {
@@ -82,7 +84,7 @@ class CoreDataArticleRepository: ArticleRepository {
         }
     }
     
-    private func clearAllArticles() {
+    func clearAllArticles() {
         let fetch: NSFetchRequest<NSFetchRequestResult> = ArticleEntity.fetchRequest()
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetch)
         
