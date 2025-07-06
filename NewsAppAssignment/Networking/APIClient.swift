@@ -53,7 +53,6 @@ struct APIClient: APIClientProtocol {
                     let result = try JSONDecoder().decode(T.self, from: data)
                     return APIResponse(httpStatusCode: httpResponse.statusCode, result: result)
                 } catch {
-                    print("Decoding error:", error.localizedDescription)
                     throw APIError.jsonParsing
                 }
 

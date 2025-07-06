@@ -1,6 +1,7 @@
 import Foundation
 
 enum APIError: LocalizedError {
+    
     case jsonParsing
     case notFound
     case unexpectedError
@@ -8,6 +9,7 @@ enum APIError: LocalizedError {
     case other(String)
     
     public var errorDescription: String? {
+        
         switch self {
         case .jsonParsing:
             return "Invalid response. Please try again later."

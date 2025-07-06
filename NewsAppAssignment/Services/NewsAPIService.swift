@@ -30,6 +30,4 @@ class NewsAPIService: NewsAPIServiceProtocol {
         }
         throw APIError.other("Unable to process at the moment.")
     }
-    
-    
 }

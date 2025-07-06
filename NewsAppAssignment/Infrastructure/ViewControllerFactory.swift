@@ -5,7 +5,6 @@ protocol ViewControllerFactoryProtocol {
     
     init(apiClient: APIClientProtocol)
     func newsListViewController(navigationController: UINavigationController) -> NewsListViewController
-
 }
 
 class ViewControllerFactory: ViewControllerFactoryProtocol {

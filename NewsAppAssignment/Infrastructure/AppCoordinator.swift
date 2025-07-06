@@ -2,11 +2,11 @@ import Foundation
 import UIKit
 
 class AppCoordinator {
+    
     let window: UIWindow
     let viewControllerFactory: ViewControllerFactoryProtocol
     private var navigationController: UINavigationController!
 
-    
     init(window: UIWindow, viewControllerFactory: ViewControllerFactoryProtocol) {
         self.window = window
         self.viewControllerFactory = viewControllerFactory
