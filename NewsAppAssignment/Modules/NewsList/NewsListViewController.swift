@@ -37,12 +37,12 @@ class NewsListViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "News List"
+        self.title = "Latest News"
         view.backgroundColor = .systemBackground
         setupUI()
         setupTableView()
         bindViews()
-        fetchMoviesList(forceRefresh: false)
+        fetchNewsList(forceRefresh: false)
     }
     
     // MARK: - Setup UI
@@ -68,7 +68,7 @@ class NewsListViewController: UIViewController {
     }
     
     @objc private func refreshData() {
-        fetchMoviesList(forceRefresh: true)
+        fetchNewsList(forceRefresh: true)
     }
     
     private func setupTableView() {
@@ -94,11 +94,11 @@ class NewsListViewController: UIViewController {
     }
     
     // MARK: - Fetch
-    private func fetchMoviesList(forceRefresh: Bool) {
+    private func fetchNewsList(forceRefresh: Bool) {
         Task { [weak self] in
             guard let self = self else { return }
             do {
-                try await viewModel.loadArticles(forceRefresh: forceRefresh)
+              viewModel.loadArticles(forceRefresh: forceRefresh)
             } catch {
                 await MainActor.run {
                     let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)

@@ -18,7 +18,7 @@ class NewsViewModel: ObservableObject {
 
         repository.clearExpiredArticles()
         let cached = repository.getCachedArticles()
-        
+        print(cached)
         if !cached.isEmpty {
             self.articles = cached
         } else {
@@ -31,6 +31,7 @@ class NewsViewModel: ObservableObject {
             do {
                 let articles = try await self?.apiService.newsList() ?? []
                 DispatchQueue.main.async {
+                    print(articles)
                     self?.articles = articles
                     self?.repository.save(articles: articles)
                 }
@@ -39,5 +40,4 @@ class NewsViewModel: ObservableObject {
             }
         }
     }
-
 }

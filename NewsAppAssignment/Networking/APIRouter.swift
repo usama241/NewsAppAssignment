@@ -12,7 +12,7 @@ enum APIRouter {
      var path: String {
           switch self {
          
-          case .newsList(source: let source, apiKey: let apiKey):
+          case .newsList:
               return "/top-headlines"
               
           }

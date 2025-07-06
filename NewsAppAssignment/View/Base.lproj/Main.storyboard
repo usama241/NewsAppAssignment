@@ -14,16 +14,16 @@
         </array>
     </customFonts>
     <scenes>
-        <!--Movies List-->
+        <!--Latest News-->
         <scene sceneID="D14-BH-Piy">
             <objects>
-                <viewController storyboardIdentifier="NewsListViewController" title="Movies List" id="sW4-mB-HJV" customClass="NewsListViewController" customModule="NewsAppAssignment" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewsListViewController" title="Latest News" id="sW4-mB-HJV" customClass="NewsListViewController" customModule="NewsAppAssignment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kVq-AD-auq">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie List is Empty!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tmv-ad-07p">
-                                <rect key="frame" x="124.66666666666669" y="416.66666666666669" width="144" height="18.666666666666686"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="News List is Empty!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tmv-ad-07p">
+                                <rect key="frame" x="126" y="416.66666666666669" width="141" height="18.666666666666686"/>
                                 <fontDescription key="fontDescription" name="Inter-SemiBold" family="Inter" pointSize="16"/>
                                 <nil key="highlightedColor"/>
                                 <userDefinedRuntimeAttributes>
@@ -77,7 +77,7 @@
     </scenes>
     <resources>
         <systemColor name="systemGroupedBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

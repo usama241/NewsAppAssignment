@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  NewsAppAssignment
-//
-//  Created by MacBook Pro on 04/07/2025.
-//
-
 import UIKit
 import CoreData
 

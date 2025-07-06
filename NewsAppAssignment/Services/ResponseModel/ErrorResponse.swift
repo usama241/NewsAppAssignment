@@ -1,10 +1,3 @@
-//
-//  ErrorResponse.swift
-//  NewsAppAssignment
-//
-//  Created by MacBook Pro on 05/07/2025.
-//
-
 import Foundation
 
 struct ErrorResponse: Codable {

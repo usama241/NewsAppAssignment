@@ -1,10 +1,3 @@
-//
-//  CoreDataStack.swift
-//  NewsAppAssignment
-//
-//  Created by MacBook Pro on 05/07/2025.
-//
-
 import Foundation
 import CoreData
 

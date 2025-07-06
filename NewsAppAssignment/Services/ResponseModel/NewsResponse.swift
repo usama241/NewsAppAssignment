@@ -1,10 +1,3 @@
-//
-//  NewsResponse.swift
-//  NewsAppAssignment
-//
-//  Created by MacBook Pro on 04/07/2025.
-//
-
 import Foundation
 
 struct NewsResponse : Codable {
